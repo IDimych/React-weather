@@ -11,25 +11,36 @@ const PLACES = [
 
 class WeatherDisplay extends React.Component {
   render() {
-    return <h1>Displaying weather for city {this.props.zip}</h1>;
+    return <h1>Displaying weather for city {this.props.name} {this.props.zip}</h1>;
   }
 }
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      activePlace: 0,
+    };
+  }
   render() {
+    const activePlace = this.state.activePlace;
     return (
         <div className="App">
           {PLACES.map((place, index) => (
               <button
                 key={index}
                 onClick={() => {
-                  console.log("Clicked index " +index)
+                  this.setState({activePlace: index})
                 }}
               >
                 {place.name}
               </button>
           ))}
-          <WeatherDisplay zip={"12345"} />
+          <WeatherDisplay
+              key={activePlace}
+              zip={PLACES[activePlace].zip}
+              name={PLACES[activePlace].name}
+          />
         </div>
     )
   }
